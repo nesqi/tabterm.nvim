@@ -109,13 +109,13 @@ function M.toggle_tab_term()
     -- We need to start a new terminal
     local cwd = vim.fn.getcwd()
     vim.cmd("vertical botright vnew term://" .. cwd ..
-            "//1:/bin/bash;\\#tabterm" .. tab_data.id .. "\\#")
+            "//1:bash;\\#tabterm" .. tab_data.id .. "\\#")
 
     local init = cwd .. '/init.sh'
     if M.file_exists(init) then
         local b = M.find_term_buffer(tab_data.id)
         local id = vim.fn.getbufvar(b, "terminal_job_id")
-        vim.api.nvim_chan_send(id, "./init.sh\n")
+        vim.api.nvim_chan_send(id, "source ./init.sh\n")
     end
 
     vim.cmd("startinsert")
